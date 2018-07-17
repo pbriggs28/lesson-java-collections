@@ -2,6 +2,7 @@ package com.prestonb.edu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class AppRunner {
 		printArrayList();
 		sortArrayListOption1();
 		System.out.println("After sorting arrayList...");
+		printArrayList();
+
+		System.out.println("Before sorting arrayList by evens...");
+		printArrayList();
+		customArrayListSort();
+		System.out.println("After sorting arrayList by evens...");
 		printArrayList();
 	}
 	
@@ -88,6 +95,37 @@ public class AppRunner {
 	
 	private void sortArrayListOption2() {
 		Collections.sort(intArrayList);
+	}
+	
+	private void customArrayListSort() {
+		intArrayList.sort(new EvensFirstSorter());
+	}
+	
+	private static class EvensFirstSorter implements Comparator<Integer> {
+
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			boolean o1Even = isEven(o1);
+			boolean o2Even = isEven(o2);
+			
+			if(o1Even && o2Even)
+				return 0;
+			
+			if(!o1Even && !o2Even)
+				return 0;
+			
+			if(o1Even && !o2Even)
+				return -1;
+			
+			if(!o1Even && o2Even)
+				return 1;
+			
+			throw new IllegalStateException("I suck at coding");
+		}
+		
+		private boolean isEven(int n) {
+			return n % 2 == 0;
+		}
 	}
 
 
